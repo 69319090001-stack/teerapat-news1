@@ -1,0 +1,78 @@
+﻿<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeerapatNews – ข่าวเด่นวันนี้</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="navbar-container"></div>
+    <main class="wrap">
+      <section class="hero-section">
+        <article class="hero-card">
+          <img id="hero-image" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80" alt="ภาพข่าวเด่น" />
+          <div class="hero-copy">
+            <span class="eyebrow" id="hero-tag">เด่น</span>
+            <h1 id="hero-title">ข่าวเด่นวันนี้ที่อ่านง่าย ทันเหตุการณ์ และดูมีสไตล์</h1>
+            <p id="hero-summary">ติดตามข่าวล่าสุดที่คัดสรรมาอย่างพิถีพิถัน พร้อมดีไซน์มินิมอลที่ช่วยให้การอ่านสบายตายิ่งขึ้น.</p>
+            <div class="hero-actions">
+              <a id="hero-cta" class="button primary" href="#">อ่านต่อ</a>
+              <a class="button secondary" href="world-news.html">ข่าวรอบโลก</a>
+            </div>
+          </div>
+        </article>
+      </section>
+      <section class="news-toolbar">
+        <div class="result-summary" id="result-summary">แสดงข่าวทั้งหมด</div>
+        <div class="toolbar-actions">
+          <div class="chip-list" id="category-filter" aria-label="ตัวกรองหมวดข่าว"></div>
+          <div class="sort-control" aria-label="เรียงลำดับข่าว">
+            <button type="button" class="sort-button active" data-sort="newest">ล่าสุด</button>
+            <button type="button" class="sort-button" data-sort="oldest">เก่าสุด</button>
+          </div>
+        </div>
+      </section>
+      <div class="news-layout">
+        <div class="news-feed">
+          <div class="panel">
+            <h2>ข่าวล่าสุด</h2>
+            <div class="feed-grid" id="feed-grid"></div>
+          </div>
+        </div>
+        <aside class="sidebar">
+          <div class="panel">
+            <h3>Trending</h3>
+            <div id="trending-list"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <footer class="site-footer wrap">
+      <div class="footer-grid">
+        <div>
+          <h4>เกี่ยวกับ</h4>
+          <a href="#">TeerapatNews</a>
+          <a href="#">ทีมงาน</a>
+          <a href="#">นโยบาย</a>
+        </div>
+        <div>
+          <h4>ช่วยเหลือ</h4>
+          <a href="#">ติดต่อ</a>
+          <a href="#">คำถามพบบ่อย</a>
+          <a href="#">ข้อกำหนด</a>
+        </div>
+        <div>
+          <h4>ติดตาม</h4>
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>
+          <a href="#">Line</a>
+        </div>
+      </div>
+      <p>เวบไตข่าวสไตลมินิมอล เพื่อการอ่านที่ชัดเจน สบายตา และเข้าใจง่าย.</p>
+    </footer>
+    <script src="navbar.js"></script>
+    <script src="render.js"></script>
+    <script src="news-data.js"></script>
+  </body>
+</html>

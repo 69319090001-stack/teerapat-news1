@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>สมัครสมาชิก – TeerapatNews</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="navbar-container"></div>
+  <main class="wrap auth-page">
+    <section class="auth-card">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="ChatGPT%20Image%20Aug%206%2C%202026%2C%2010_44_52%20AM.png" alt="TeerapatNews logo" />
+        <span class="brand-text"><strong>Teerapat</strong><span>News</span></span>
+      </a>
+      <h1>สมัครสมาชิก</h1>
+      <p>สร้างบัชีใหม่เพื่อเข้าถึงฟีเจอรและจัดการข่าวได้อย่างสะดวก</p>
+      <form id="signup-form" class="form-grid">
+        <div class="form-group">
+          <label for="name">ชื่อ</label>
+          <input class="input" id="name" type="text" placeholder="ชื่อของคุ" required />
+        </div>
+        <div class="form-group">
+          <label for="email">อีเมล</label>
+          <input class="input" id="email" type="email" placeholder="you@example.com" required />
+        </div>
+        <div class="form-group">
+          <label for="password">รหัสผ่าน</label>
+          <input class="input" id="password" type="password" placeholder="อย่างน้อย 4 ตัว" required />
+        </div>
+        <div class="form-actions">
+          <button class="button primary block" type="submit">สมัครสมาชิก</button>
+          <a class="button secondary block" href="login.html">มีบัชีแล้ว? เข้าส่ระบบ</a>
+        </div>
+      </form>
+      <div id="message" class="message"></div>
+      <div class="link-row">
+        <a href="index.html">← กลับไปหน้าแรก</a>
+      </div>
+    </section>
+  </main>
+  <script src="navbar.js"></script>
+  <script>
+    const form = document.getElementById('signup-form');
+    const message = document.getElementById('message');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const apiHost = window.location.hostname === '127.0.0.1' ? 'http://localhost:3000' : '';
+        const response = await fetch(`${apiHost}/api/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password }),
+        });
+        const text = await response.text();
+        const result = text ? JSON.parse(text) : { ok: false, message: 'เซิร์ฟเวอร์ตอบกลับว่าง' };
+        message.className = 'message ' + (result.ok ? 'success' : 'error');
+        message.textContent = result.message;
+        if (result.ok) {
+          const role = email.toLowerCase() === 'admin@teerapatnews.com' ? 'admin' : 'user';
+          const user = result.user || { name, email, role };
+          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('teerapatAuth', JSON.stringify(user));
+          const redirectUrl = user.role === 'admin' ? 'admin.html' : 'profile.html';
+          setTimeout(() => window.location.href = redirectUrl, 1000);
+        }
+      } catch (error) {
+        message.className = 'message error';
+        message.textContent = 'ไม่สามารถเชื่อมต่อกับเิรฟเวอรได้';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+﻿<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeerapatNews – อ่านข่าว</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="navbar-container"></div>
+    <main class="wrap article-page">
+      <article class="article-hero">
+        <img id="article-hero-img" src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80" alt="ภาพบทความ" />
+      </article>
+      <section class="article-content panel">
+        <div class="article-header-row">
+          <span class="article-category" id="article-category">รอบโลก</span>
+          <button type="button" id="article-edit-button" class="button secondary hidden" style="display:none;">แก้ไขข่าว</button>
+        </div>
+        <h1 id="article-title">บทความข่าวสารที่อ่านได้สบายตา</h1>
+        <div class="article-meta">
+          <span id="article-author">โดย ทีมข่าว TeerapatNews</span>
+          <span>·</span>
+          <span id="article-time">อัปเดตเมื่อสักครู่</span>
+          <span>·</span>
+          <span id="article-readtime">อ่าน 4 นาที</span>
+        </div>
+        <div class="article-body" id="article-body">
+          <p>กำลังโหลดบทความ...</p>
+        </div>
+        <section class="read-next">
+          <h3>อ่านต่อ</h3>
+          <a id="read-next-card" class="read-next-card" href="#">
+            <div class="meta">
+              <h3>บทความแนะนำถัดไป</h3>
+              <p>บทความต่อเนื่องในสไตลอ่านง่ายและชัดเจน</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1518933165971-611dbc9c412d?auto=format&fit=crop&w=800&q=80" alt="บทความแนะนำ" />
+          </a>
+        </section>
+      </section>
+    </main>
+    <div id="edit-modal" class="edit-modal-backdrop hidden" aria-hidden="true">
+      <div class="edit-modal" role="dialog" aria-modal="true" aria-labelledby="modal-edit-title">
+        <div class="modal-header">
+          <h3 id="modal-edit-title">แก้ไขข่าว</h3>
+          <button type="button" id="close-edit-modal" class="icon-button" aria-label="ปิดหน้าต่างแก้ไข">×</button>
+        </div>
+
+        <div class="modal-body">
+          <input type="hidden" id="modal-f-editing-id" value="" />
+
+          <div class="modal-preview">
+            <img id="modal-image-preview" src="" alt="ตัวอย่างภาพข่าว" />
+          </div>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="modal-f-title">พาดหัวข่าว *</label>
+              <input class="input" type="text" id="modal-f-title" placeholder="เช่น แมวอ้วนปีนต้เยนไม่สำเรจ..." />
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="modal-f-category">หมวดหมู่ *</label>
+                <select class="input" id="modal-f-category"></select>
+              </div>
+              <div class="form-group">
+                <label for="modal-f-image">ลิงก์ภาพ *</label>
+                <input class="input" type="url" id="modal-f-image" placeholder="https://example.com/image.jpg" />
+              </div>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="modal-f-author">ผู้อ่าน</label>
+                <input class="input" type="text" id="modal-f-author" placeholder="ทีมข่าว TeerapatNews" value="ทีมข่าว TeerapatNews" />
+              </div>
+              <div class="form-group">
+                <label for="modal-f-timeago">เวลาที่เผยแพร่</label>
+                <input class="input" type="text" id="modal-f-timeago" placeholder="2 ชม.ที่แล้ว" value="เมื่อสักครู่" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="modal-f-readtime">เวลาอ่าน</label>
+              <input class="input" type="text" id="modal-f-readtime" placeholder="3 นาที" value="3 นาที" />
+            </div>
+
+            <div class="form-group">
+              <label for="modal-f-body">เนื้อข่าว *</label>
+              <textarea class="textarea" id="modal-f-body" placeholder="พิมพ์เนื้อข่าว"></textarea>
+              <p class="form-note">แยกแต่ละย่อหน้าด้วยบรรทัดว่าง · ใช้ "- " นำหน้ารายการเพื่อสร้างลิสต์</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="button secondary" onclick="closeEditModal()">ยกเลิก</button>
+          <button type="button" class="button primary" onclick="saveModalArticle()">บันทึกการแก้ไข</button>
+        </div>
+      </div>
+    </div>
+
+    <footer class="site-footer wrap">
+      <div class="footer-grid">
+        <div>
+          <h4>เกี่ยวกับ</h4>
+          <a href="#">TeerapatNews</a>
+          <a href="#">ทีมงาน</a>
+          <a href="#">นโยบาย</a>
+        </div>
+        <div>
+          <h4>ช่วยเหลือ</h4>
+          <a href="#">ติดต่อ</a>
+          <a href="#">คำถามพบบ่อย</a>
+          <a href="#">ข้อกำหนด</a>
+        </div>
+        <div>
+          <h4>ติดตาม</h4>
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>
+          <a href="#">Line</a>
+        </div>
+      </div>
+      <p>ข่าวเรียบง่าย โดย TeerapatNews.</p>
+    </footer>
+    <script src="navbar.js"></script>
+    <script src="render.js"></script>
+    <script src="news-data.js"></script>
+  </body>
+</html>

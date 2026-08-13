@@ -1,0 +1,105 @@
+﻿<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>จัดการข่าว – TeerapatNews Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="navbar-container"></div>
+  <main class="wrap auth-page">
+    <section class="section-head">
+      <div>
+        <span class="eyebrow">Admin Dashboard</span>
+        <h1>จัดการข่าว TeerapatNews</h1>
+        <p>เพิ่ม แก้ไข หรือลบข่าวได้ทันที พร้อมดสถานะและรายการข่าวรวมทั้งหมดในหน้าเดียว.</p>
+      </div>
+    </section>
+
+    <div class="admin-panel-grid">
+      <div>
+        <section class="form-card">
+          <h2 id="form-title">เพิ่มข่าวใหม่</h2>
+          <input type="hidden" id="f-editing-id" value="" />
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-title">พาดหัวข่าว *</label>
+              <input class="input" type="text" id="f-title" placeholder="เช่น แมวอ้วนปีนต้เยนไม่สำเรจ..." />
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="f-category">หมวดหม่ *</label>
+                <select class="input" id="f-category"></select>
+              </div>
+              <div class="form-group">
+                <label for="f-image">ลิงก์ภาพ (JPEG, PNG, GIF, WEBP, SVG ฯลฯ) *</label>
+                <input class="input" type="url" id="f-image" placeholder="https://example.com/image.jpg" />
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="f-author">ผ้เขียน</label>
+                <input class="input" type="text" id="f-author" placeholder="เหมียวสามสี" value="ทีมข่าว TeerapatNews" />
+              </div>
+              <div class="form-group">
+                <label for="f-timeago">เวลาพสต</label>
+                <input class="input" type="text" id="f-timeago" placeholder="2 ชม.ที่แล้ว" value="เมื่อสักคร่" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="f-readtime">เวลาที่ใช้อ่าน</label>
+              <input class="input" type="text" id="f-readtime" placeholder="3 นาที" value="3 นาที" />
+            </div>
+            <div class="form-group">
+              <label for="f-body">เนื้อข่าว *</label>
+              <textarea class="textarea" id="f-body" placeholder="พิมพเนื้อข่าว แยกแต่ละย่อหน้าด้วยการเว้นบรรทัดว่าง"></textarea>
+              <p class="form-note">แยกแต่ละย่อหน้าด้วยบรรทัดว่าง · ใช้ "- " นำหน้ารายการ เพื่อสร้างลิสต</p>
+            </div>
+            <div class="form-actions">
+              <button class="button primary" type="button" onclick="saveArticle()">บันทึกข่าว</button>
+              <button class="button secondary" type="button" onclick="resetForm()">ล้างฟอรม</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h3>วิีใช้งาน</h3>
+          <p class="form-note">ข่าวที่บันทึกจะปรากทันทีบนหน้าเวบเมื่อมีการรีเฟรชหรือหลดใหม่ตามปกติ ดยข้อมลอ้างอิงอย่ในานข้อมลของเิรฟเวอรที่เชื่อมต่อ.</p>
+          <div class="form-actions">
+            <button class="button primary" type="button" onclick="downloadDb()">ดาวนหลด news-data.js</button>
+            <button class="button secondary" type="button" onclick="showExportPreview()">ดค้ดก่อนดาวนหลด</button>
+            <button class="button" type="button" onclick="discardDrafts()">ล้างข้อมลชั่วคราว</button>
+          </div>
+        </section>
+      </div>
+      <aside class="sidebar">
+        <section class="panel">
+          <h3>ข่าวทั้งหมด (<span id="count">0</span>)</h3>
+          <div class="article-list" id="article-list"></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <script src="navbar.js"></script>
+  <script>
+    (function () {
+      const stored = localStorage.getItem('user');
+      let user = null;
+      try {
+        user = stored ? JSON.parse(stored) : null;
+      } catch {
+        user = null;
+      }
+      const isAdmin = user && (user.role === 'admin' || user.email?.toLowerCase() === 'admin@teerapatnews.com');
+      if (!isAdmin) {
+        window.location.href = 'login.html';
+      }
+    })();
+  </script>
+  <script src="auth.js"></script>
+  <script src="news-data.js"></script>
+  <script src="render.js"></script>
+</body>
+</html>

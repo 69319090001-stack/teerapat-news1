@@ -1,0 +1,74 @@
+﻿<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TeerapatNews – ข่าวรอบโลก</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="navbar-container"></div>
+    <main class="wrap">
+      <section class="hero-section hero-overlay">
+        <article class="hero-card">
+          <img id="hero-image" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=80" alt="เหตุการณ์รอบโลก" />
+          <div class="hero-copy">
+            <span class="eyebrow">รอบโลก</span>
+            <h1>เหตุการณ์ทั่วโลกที่คุณไม่ควรพลาด</h1>
+            <p>อ่านข่าวรอบโลกในสไตล์เรียบง่าย ชัดเจน และทันสมัย.</p>
+          </div>
+        </article>
+      </section>
+      <section class="news-toolbar">
+        <div class="result-summary" id="result-summary">แสดงข่าวรอบโลก</div>
+        <div class="toolbar-actions">
+          <div class="chip-list" id="category-filter" aria-label="ตัวกรองหมวดข่าว"></div>
+          <div class="sort-control" aria-label="เรียงลำดับข่าว">
+            <button type="button" class="sort-button active" data-sort="newest">ล่าสุด</button>
+            <button type="button" class="sort-button" data-sort="oldest">เก่าสุด</button>
+          </div>
+        </div>
+      </section>
+      <div class="news-layout">
+        <div class="news-feed">
+          <div class="panel">
+            <h2>ข่าวรอบโลก</h2>
+            <div class="feed-grid" id="feed-grid"></div>
+          </div>
+        </div>
+        <aside class="sidebar">
+          <div class="panel">
+            <h3>Trending</h3>
+            <div id="trending-list"></div>
+          </div>
+        </aside>
+      </div>
+    </main>
+    <footer class="site-footer wrap">
+      <div class="footer-grid">
+        <div>
+          <h4>เกี่ยวกับ</h4>
+          <a href="#">TeerapatNews</a>
+          <a href="#">ทีมงาน</a>
+          <a href="#">นโยบาย</a>
+        </div>
+        <div>
+          <h4>ช่วยเหลือ</h4>
+          <a href="#">ติดต่อ</a>
+          <a href="#">คำถามพบบ่อย</a>
+          <a href="#">ข้อกำหนด</a>
+        </div>
+        <div>
+          <h4>ติดตาม</h4>
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>
+          <a href="#">Line</a>
+        </div>
+      </div>
+      <p>อ่านข่าวรอบโลกแบบเรียบง่าย ชัดเจน และทันสมัย.</p>
+    </footer>
+    <script src="navbar.js"></script>
+    <script src="render.js"></script>
+    <script src="news-data.js"></script>
+  </body>
+</html>

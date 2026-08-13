@@ -1,0 +1,108 @@
+﻿<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>โปรไฟล์ของฉัน – TeerapatNews</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="navbar-container"></div>
+  <main class="wrap auth-page">
+    <section class="auth-card">
+      <a class="brand" href="index.html">
+        <img class="brand-mark" src="ChatGPT%20Image%20Aug%206%2C%202026%2C%2010_44_52%20AM.png" alt="TeerapatNews logo" />
+        <span class="brand-text"><strong>Teerapat</strong><span>News</span></span>
+      </a>
+      <h1>โปรไฟล์ของฉัน</h1>
+      <p>จัดการข้อมูลส่วนตัวของคุณและดูสิทธิ์ผู้ใช้งาน</p>
+      <form id="profile-form" class="form-grid">
+        <div class="form-group">
+          <label for="name">ชื่อ-นามสกุล</label>
+          <input id="name" type="text" required />
+        </div>
+        <div class="form-group">
+          <label for="email">อีเมล</label>
+          <input id="email" type="email" required />
+        </div>
+        <div class="form-group">
+          <label for="role">บทบาท</label>
+          <input id="role" type="text" disabled />
+        </div>
+        <div class="form-actions">
+          <button class="button primary block" type="submit">บันทึกการเปลี่ยนแปลง</button>
+        </div>
+      </form>
+      <button id="logout-btn" class="button secondary block" type="button">ออกจากระบบ</button>
+      <div id="message" class="message"></div>
+      <div class="link-row">
+        <a href="index.html">← กลับไปหน้าแรก</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="navbar.js"></script>
+  <script>
+    const userJson = localStorage.getItem('user');
+    if (!userJson) {
+      window.location.href = 'login.html';
+    }
+
+    const currentUser = JSON.parse(userJson);
+    const form = document.getElementById('profile-form');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const roleInput = document.getElementById('role');
+    const message = document.getElementById('message');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    const userRole = currentUser.role || (currentUser.email?.toLowerCase() === 'admin@teerapatnews.com' ? 'admin' : 'user');
+    nameInput.value = currentUser.name || '';
+    emailInput.value = currentUser.email || '';
+    roleInput.value = userRole;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      try {
+        const apiHost = window.location.hostname === '127.0.0.1' ? 'http://localhost:3000' : '';
+        const response = await fetch(`${apiHost}/api/update-profile`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: currentUser.id,
+            name: nameInput.value,
+            email: emailInput.value
+          })
+        });
+
+        const text = await response.text();
+        const result = text ? JSON.parse(text) : { ok: false, message: 'เซิร์ฟเวอร์ตอบกลับว่าง' };
+        message.className = 'message ' + (result.ok ? 'success' : 'error');
+        message.textContent = result.message;
+
+        if (result.ok) {
+          const updatedUser = {
+            id: result.user.id,
+            name: result.user.name,
+            email: result.user.email,
+            role: result.user.role || userRole
+          };
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          roleInput.value = updatedUser.role;
+        }
+      } catch (error) {
+        message.className = 'message error';
+        message.textContent = 'ไม่สามารถเชื่อมต่อกับเิรฟเวอรได้';
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      if (confirm('คุต้องการออกจากระบบใช่หรือไม่?')) {
+        localStorage.removeItem('user');
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</body>
+</html>
