@@ -15,25 +15,21 @@ let pool;
 
 async function ensureDatabase() {
   const bootstrap = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    waitForConnections: true,
-    connectionLimit: 1,
-    queueLimit: 0
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT || 3306,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
   });
 
   await bootstrap.execute('CREATE DATABASE IF NOT EXISTS teerapat_news');
   await bootstrap.end();
 
   pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'teerapat_news',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
+  host: process.env.MYSQL_HOST,
+  port: process.env.MYSQL_PORT || 3306,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE || 'teerapat_news',
   });
 
   await pool.execute(`
@@ -318,8 +314,10 @@ app.delete('/api/news/:id', async (req, res) => {
 
 ensureDatabase()
   .then(() => {
-    app.listen(3000, () => {
-      console.log('🚀 Server is running on http://localhost:3000');
+    const PORT = process.env.PORT || 3000;
+
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server is running on port ${PORT}`);
     });
   })
   .catch((error) => {
